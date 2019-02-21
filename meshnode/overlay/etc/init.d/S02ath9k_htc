@@ -1,0 +1,2 @@
+#!/bin/sh
+modprobe ath9k_htc

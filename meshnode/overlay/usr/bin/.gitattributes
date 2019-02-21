@@ -1,0 +1,2 @@
+yggdrasil filter=lfs diff=lfs merge=lfs -text
+yggdrasilctl filter=lfs diff=lfs merge=lfs -text
