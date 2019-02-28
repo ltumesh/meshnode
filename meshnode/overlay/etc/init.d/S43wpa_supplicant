@@ -1,0 +1,1 @@
+wpa_supplicant -B -Dnl80211,wext -iwlan0 -c/etc/wpa_supplicant.conf
