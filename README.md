@@ -19,6 +19,13 @@ Enter Buildroot:
 cd buildroot
 ```
 
+## Add SSH public key
+To access the Meshnode, add your SSH key to the overlay:
+```
+mkdir -p $BR2_EXTERNAL/overlay/root/.ssh && \
+cp $HOME/.ssh/id_rsa.pub $_/authorized_keys
+```
+
 ## Creating and flashing image
 ### Raspberry Pi 2
 Use Raspberry Pi 2 `defconfig`:
