@@ -7,8 +7,6 @@ Experimental Ad-Hoc Mesh node that runs batman-adv, Cjdns and Yggdrasil.
 Clone repository and enter it:
 ```
 git clone git@github.com:ltumesh/meshnode.git --recursive && cd meshnode
-git lfs install
-git lfs pull
 ```
 Set `BR2_EXTERNAL` tree to meshnode, and set number of threads to utilize:
 ```
