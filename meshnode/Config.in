@@ -1,0 +1,3 @@
+# Cjdns has some weird problem when compiling, disabling for now...
+#source "$BR2_EXTERNAL_MESHNODE_PATH/package/cjdns/Config.in"
+source "$BR2_EXTERNAL_MESHNODE_PATH/package/yggdrasil/Config.in"
