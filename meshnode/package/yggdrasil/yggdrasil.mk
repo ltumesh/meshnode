@@ -19,4 +19,10 @@ YGGDRASIL_INSTALL_BINS = yggdrasil yggdrasilctl
 HOST_GO_TARGET_ENV += GO111MODULE=on
 HOST_GO_MAKE_ENV += GO111MODULE=on
 
+define YGGDRASIL_INSTALL_INIT_SYSV
+	$(INSTALL) -D -m 0755 \
+		$(YGGDRASIL_PKGDIR)/files/yggdrasil.init \
+		$(TARGET_DIR)/etc/init.d/S42yggdrasil
+endef
+
 $(eval $(golang-package))
