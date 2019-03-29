@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+echo "Configuring mesh IBSS network..."
+/sbin/ip link set down "$1"
+/usr/sbin/iw "$1" set type ibss
+/sbin/ip link set up name mesh0 mtu 1532 dev "$1"
+/usr/sbin/iw dev mesh0 ibss join Mesh 2412 HT20 fixed-freq 02:C0:FF:EE:BA:BE
+
+echo "Adding link device to batman-adv..."
+/usr/sbin/batctl if add mesh0
+/sbin/ip link set up dev bat0
