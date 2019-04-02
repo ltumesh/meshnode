@@ -27,6 +27,14 @@ define CJDNS_CONFIGURE_CMDS
 	exit 1
 endef
 
+ifneq ($(BR2_LINUX_KERNEL_SECCOMP_FILTER),y)
+CJDNS_DO_VARS+= Seccomp_NO=1
+endif
+
+ifneq ($(BR2_TOOLCHAIN_USES_UCLIBC),)
+CJDNS_DO_VARS+= UCLIBC=1
+endif
+
 define CJDNS_BUILD_CMDS
 	mkdir -p $(@D)/tmp
 	(cd $(@D) && \
