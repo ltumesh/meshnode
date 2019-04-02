@@ -11,20 +11,26 @@ CJDNS_LICENSE_FILES = LICENSE
 CJDNS_INSTALL_STAGING = YES
 
 define CJDNS_CONFIGURE_CMDS
+	# The compilation fails when br_real is given an empty file name from
+	# the Cjdns node_build scripts:
+	# ```
+	# Link time optimization not supported [arm-buildroot-linux-uclibcgnueabihf-gcc.br_real: error: : No such file or directory
+	# arm-buildroot-linux-uclibcgnueabihf-gcc.br_real: error: : No such file or directory
+	# arm-buildroot-linux-uclibcgnueabihf-gcc.br_real: error: : No such file or directory
+	# arm-buildroot-linux-uclibcgnueabihf-gcc.br_real: error: : No such file or directory
+	# arm-buildroot-linux-uclibcgnueabihf-gcc.br_real: error: : No such file or directory
+	# arm-buildroot-linux-uclibcgnueabihf-gcc.br_real: error: : No such file or directory
+	# arm-buildroot-linux-uclibcgnueabihf-gcc.br_real: error: : No such file or directory
+	# arm-buildroot-linux-uclibcgnueabihf-gcc.br_real: error: : No such file or directory
+	# ...
+	# ```
+	exit 1
 endef
 
-ifneq ($(BR2_LINUX_KERNEL_SECCOMP_FILTER),y)
-CJDNS_DO_VARS+= Seccomp_NO=1
-endif
-
-ifneq ($(BR2_TOOLCHAIN_USES_UCLIBC),)
-CJDNS_DO_VARS+= UCLIBC=1
-endif
-
 define CJDNS_BUILD_CMDS
-	echo $(TARGET_ARCH)
 	mkdir -p $(@D)/tmp
 	(cd $(@D) && \
+	PATH="$(PATH):$(HOST_DIR)/bin" \
 	CROSS="true" \
 	CC="$(TARGET_CC)" \
 	AR="$(TARGET_AR)" \
@@ -36,7 +42,7 @@ define CJDNS_BUILD_CMDS
 	SSP_SUPPORT="$(BR2_TOOLCHAIN_BUILDROOT_USE_SSP)" \
 	CJDNS_BUILD_TMPDIR="$(@D)/tmp" \
 	$(CJDNS_DO_VARS) \
-	exec ./do)
+	./do)
 endef
 
 $(eval $(generic-package))
