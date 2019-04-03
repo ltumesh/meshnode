@@ -1,0 +1,56 @@
+#!/bin/sh
+
+YGGCONFFILE="/etc/yggdrasil.conf"
+HOSTNAMEFILE="/etc/hostname"
+DEFAULTHOSTNAME="meshnode"
+HOSTSUFFIX=".ltumesh"
+
+randomname() {
+	hostsuffix=$1
+	< /dev/urandom tr -cd "[:lower:]" | head -c 6; echo "$hostsuffix"
+}
+
+genyggconf() {
+	conffile=$1
+	nodename=$2
+
+	# Generate the yggdrasil config file and set nodename in NodeInfo.
+	/usr/bin/yggdrasil -genconf \
+		| sed "s/NodeInfo: {}/NodeInfo: { \"name\": \"$nodename\" }/g" \
+		> "$conffile"
+
+	return $?
+}
+
+start() {
+	if [ "$(hostname)" = $DEFAULTHOSTNAME ]; then
+		printf 'Generating new hostname: '
+		if randomname $HOSTSUFFIX > $HOSTNAMEFILE; then
+			echo "OK"
+		else
+			echo "FAIL"
+			return 1
+		fi
+		hostname -F $HOSTNAMEFILE # Reload hostname.
+	fi
+
+	if [ ! -f "$YGGCONFFILE" ]; then
+		printf 'Generating Yggdrasil configuration file: '
+		if genyggconf "$YGGCONFFILE" "$(hostname)"; then
+			echo "OK"
+		else
+			echo "FAIL"
+			return 1
+		fi
+	fi
+}
+
+case "$1" in
+	start)
+		"$1";;
+	*)
+		echo "Usage: $0 {start}"
+		exit 1
+esac
+
+exit 0
