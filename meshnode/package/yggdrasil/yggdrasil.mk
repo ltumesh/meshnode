@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-YGGDRASIL_VERSION = 0.3.5
+YGGDRASIL_VERSION = 0.3.13
 YGGDRASIL_SITE = $(call github,yggdrasil-network,yggdrasil-go,v$(YGGDRASIL_VERSION))
 YGGDRASIL_LICENSE = LGPL-3.0
 YGGDRASIL_LICENSE_FILES = LICENSE
