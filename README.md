@@ -33,7 +33,7 @@ cp $HOME/.ssh/id_rsa.pub $_/authorized_keys
 ```
 
 ## Creating and flashing image
-### Raspberry Pi 2
+#### Raspberry Pi 2
 
 Use Raspberry Pi 2 `defconfig`:
 
