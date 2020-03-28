@@ -1,7 +1,8 @@
 meshnode
 ========
 
-Experimental Ad-Hoc Mesh node that runs batman-adv, Cjdns and Yggdrasil.
+Experimental Ad-Hoc Mesh node that runs batman-adv, ~~cjdns~~ and Yggdrasil
+(cjdns isn't supported yet).
 
 ## Setup repository and Buildroot
 
